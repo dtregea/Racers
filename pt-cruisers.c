@@ -38,7 +38,7 @@ int valid_racers( int delay_override, char * argv[], int argc ){
 /// @return 0 on program success, 1 on program failure
 int main( int argc, char * argv[] ){
     if ( argc < 3 ){
-        fprintf( stderr, "Usage: pt-cruisers [max-speed-delay]"
+        fprintf( stderr, "Usage: pt-cruisers [max-speed-delay (ms)]"
                         " name1 name2 [name3...]\n" );
         return EXIT_FAILURE;
     }
@@ -52,6 +52,10 @@ int main( int argc, char * argv[] ){
     int delay_override = 0;
     if ( endptr != argv[1] && user_delay > 0 ){ // User didnt input a new delay
       max_delay = user_delay;
+      if ( max_delay < 100 ) {
+          fprintf( stderr, "Error: movement delay must not be below 100\n");
+          return EXIT_FAILURE;
+      }
       delay_override = 1;
     }
     
